@@ -18,23 +18,43 @@ final class AppStartManager {
     
     func start() {
         
+        let tabBarController = UITabBarController(nibName: nil, bundle: nil)
         
         let rootVC = SearchBuilder.build()
         rootVC.navigationItem.title = "Search via iTunes"
         
-        let navVC = self.configuredNavigationController
+        let navVC = self.configuredNavigationController()
         navVC.viewControllers = [rootVC]
+        navVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         
-        window?.rootViewController = navVC
+        let songsSearchVC = SongSearchBuilder.build()
+        songsSearchVC.navigationItem.title = "Songs Search"
+        
+        let navSongsVC = self.configuredNavigationController()
+        navSongsVC.viewControllers = [songsSearchVC]
+        navSongsVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
+        
+        tabBarController.viewControllers = [navVC, navSongsVC]
+        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
     
-    private lazy var configuredNavigationController: UINavigationController = {
+//    private lazy var configuredNavigationController: UINavigationController = {
+//        let navVC = UINavigationController()
+//        navVC.navigationBar.barTintColor = UIColor.varna
+//        navVC.navigationBar.isTranslucent = false
+//        navVC.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        navVC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        return navVC
+//    }()
+    
+    private func configuredNavigationController() -> UINavigationController {
         let navVC = UINavigationController()
         navVC.navigationBar.barTintColor = UIColor.varna
         navVC.navigationBar.isTranslucent = false
         navVC.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navVC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         return navVC
-    }()
+    }
 }
