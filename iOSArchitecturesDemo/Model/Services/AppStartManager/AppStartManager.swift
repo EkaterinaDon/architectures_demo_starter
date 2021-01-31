@@ -34,7 +34,15 @@ final class AppStartManager {
         navSongsVC.viewControllers = [songsSearchVC]
         navSongsVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
         
-        tabBarController.viewControllers = [navVC, navSongsVC]
+        let musicSearchVC = MusicSearchBuilder.build()
+        musicSearchVC.navigationItem.title = "Music Search"
+        
+        let navMusicSearchVC = self.configuredNavigationController()
+        navMusicSearchVC.viewControllers = [musicSearchVC]
+        navMusicSearchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 2)
+        
+        
+        tabBarController.viewControllers = [navVC, navSongsVC, navMusicSearchVC]
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
